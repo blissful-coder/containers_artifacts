@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userprofile
+  namespace: api
+  labels:
+    app: userprofile
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: userprofile
+  template:
+    metadata:
+      labels:
+        app: userprofile
+    spec:
+      containers:
+      - name: userprofile
+        image: registryauc7476.azurecr.io/team5/userprofile
+        volumeMounts:
+        - name: secrets-store01-inline
+          mountPath: "/secrets"
+          readOnly: true
+        ports:
+        - containerPort: 80
+      volumes:
+        - name: secrets-store01-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kvsql-server"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userprofile
+  namespace: api
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: userprofile

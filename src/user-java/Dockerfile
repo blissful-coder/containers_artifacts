@@ -17,6 +17,7 @@ ENV PORT=80 \
     SQL_SERVER="changeme.database.windows.net" \
     SQL_DBNAME="mydrivingDB"
 
+
 # Metadata as defined in OCI image spec annotations - https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.title="Trip Insights - User (Java) API" \
       org.opencontainers.image.description="The User (Java) API component forms part of the Trip Insights application." \

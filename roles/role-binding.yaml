@@ -1,0 +1,59 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: api-user-access
+  namespace: api
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: api-dev-access
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: apidev@msftopenhack7013ops.onmicrosoft.com
+  namespace: api
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: web-user-access
+  namespace: api
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: web-dev-access
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: webdev@msftopenhack7013ops.onmicrosoft.com
+  namespace: api
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: web-user-access
+  namespace: web
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: web-dev-access
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: webdev@msftopenhack7013ops.onmicrosoft.com
+  namespace: web
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: api-user-access
+  namespace: web
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: api-dev-access
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: apidev@msftopenhack7013ops.onmicrosoft.com
+  namespace: web 

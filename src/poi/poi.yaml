@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poi
+  namespace: api
+  labels:
+    app: poi
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: poi
+  template:
+    metadata:
+      labels:
+        app: poi
+    spec:
+      containers:
+      - name: poi
+        image: registryauc7476.azurecr.io/team5/poi
+        volumeMounts:
+        - name: secrets-store01-inline
+          mountPath: "/secrets"
+          readOnly: true
+        ports:
+        - containerPort: 80
+      volumes:
+        - name: secrets-store01-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kvsql-server"  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: poi
+  namespace: api
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: poi

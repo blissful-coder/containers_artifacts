@@ -38,12 +38,14 @@ LABEL org.opencontainers.image.title="Trip Insights - Trips API" \
       org.opencontainers.image.revision=$IMAGE_SOURCE_REVISION 
 
 # add debugging utilities
-RUN apk --no-cache add \
+RUN apk add --update --no-cache add \
   curl \
   ca-certificates \
   jq \
   less \
   vim
+
+RUN update-ca-certificates
 
 # add the application to the container
 WORKDIR /app
